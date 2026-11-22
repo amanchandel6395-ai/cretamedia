@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connect WhatsApp — CRETA MEDIA</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0d0f0e;
+      color: #f5efe6;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: #161917;
+      border: 1px solid #2a2e2b;
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+    .brand {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      color: #e5b376;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 26px;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+    p.subtitle {
+      color: #a49e93;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 28px;
+    }
+    .qr-container {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 250px;
+      min-height: 250px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    .qr-container img {
+      max-width: 230px;
+      height: auto;
+      display: block;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #202422;
+      border: 1px solid #363c38;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: #dfd7ca;
+      margin-bottom: 24px;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #e5b376;
+      animation: pulse 1.5s infinite;
+    }
+    .dot.green {
+      background: #25d366;
+      box-shadow: 0 0 10px #25d366;
+      animation: none;
+    }
+    @keyframes pulse {
+      0% { opacity: 0.3; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.2); }
+      100% { opacity: 0.3; transform: scale(0.9); }
+    }
+    .steps {
+      text-align: left;
+      background: #111312;
+      border: 1px solid #232725;
+      border-radius: 12px;
+      padding: 18px 20px;
+      font-size: 13px;
+      color: #c9c2b5;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .steps ol {
+      padding-left: 20px;
+    }
+    .steps li {
+      margin-bottom: 6px;
+    }
+    .steps strong {
+      color: #e5b376;
+    }
+    .test-form {
+      display: none;
+      text-align: left;
+      margin-top: 15px;
+      border-top: 1px solid #2a2e2b;
+      padding-top: 20px;
+    }
+    .test-form.active {
+      display: block;
+    }
+    .input-group {
+      margin-bottom: 14px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      color: #a49e93;
+      margin-bottom: 5px;
+    }
+    input, textarea {
+      width: 100%;
+      background: #0d0f0e;
+      border: 1px solid #363c38;
+      border-radius: 8px;
+      color: #fff;
+      padding: 10px 12px;
+      font-size: 13px;
+      outline: none;
+    }
+    input:focus, textarea:focus {
+      border-color: #25d366;
+    }
+    button.send-btn {
+      width: 100%;
+      background: #25d366;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button.send-btn:hover {
+      background: #1ebc59;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 18px;
+      color: #8c867a;
+      text-decoration: none;
+      font-size: 12px;
+    }
+    .back-link:hover {
+      color: #e5b376;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="brand">CRETA MEDIA • Instant Messaging</div>
+    <h1>Connect Your WhatsApp</h1>
+    <p class="subtitle">Koi password ya API token nahi. Bas WhatsApp se QR scan karein aur direct connected ho jayein.</p>
+
+    <div class="status-badge" id="statusBadge">
+      <div class="dot" id="statusDot"></div>
+      <span id="statusText">Starting WhatsApp Bridge...</span>
+    </div>
+
+    <div class="qr-container" id="qrContainer">
+      <span id="qrPlaceholder" style="color: #666; font-size: 13px;">Loading QR code...</span>
+      <img id="qrImg" style="display: none;" alt="WhatsApp QR Code">
+    </div>
+
+    <div class="steps" id="stepsBox">
+      <ol>
+        <li>Phone me <strong>WhatsApp</strong> open karein.</li>
+        <li>Top-right <strong>3 dots (Android)</strong> ya <strong>Settings (iPhone)</strong> par tap karein.</li>
+        <li><strong>Linked Devices</strong> &gt; <strong>Link a Device</strong> select karein.</li>
+        <li>Camera is QR code par point karein.</li>
+      </ol>
+    </div>
+
+    <div class="test-form" id="testForm">
+      <h3 style="font-size: 15px; margin-bottom: 12px; color: #25d366;">✅ WhatsApp Connected! Send Test Message:</h3>
+      <div class="input-group">
+        <label>Recipient Phone Number (with Country Code):</label>
+        <input type="text" id="testNumber" value="919068734941" placeholder="e.g. 919068734941">
+      </div>
+      <div class="input-group">
+        <label>Message Content:</label>
+        <textarea id="testMsg" rows="3">Hello from CRETA MEDIA! Your WhatsApp is now connected to the AI Studio.</textarea>
+      </div>
+      <button class="send-btn" id="sendBtn" onclick="sendTestMessage()">Send WhatsApp Message 🚀</button>
+      <div id="sendResult" style="margin-top: 10px; font-size: 12px;"></div>
+    </div>
+
+    <div>
+      <a href="/" class="back-link">← Back to 3D Virtual Studio</a>
+    </div>
+  </div>
+
+  <script>
+    async function checkStatus() {
+      try {
+        const res = await fetch('/api/v1/whatsapp/status');
+        const data = await res.json();
+
+        const statusDot = document.getElementById('statusDot');
+        const statusText = document.getElementById('statusText');
+        const qrImg = document.getElementById('qrImg');
+        const qrPlaceholder = document.getElementById('qrPlaceholder');
+        const qrContainer = document.getElementById('qrContainer');
+        const stepsBox = document.getElementById('stepsBox');
+        const testForm = document.getElementById('testForm');
+
+        if (data.state === 'connected') {
+          statusDot.className = 'dot green';
+          statusText.textContent = 'Connected as: ' + (data.connectedUser || 'Active WhatsApp');
+          qrContainer.style.display = 'none';
+          stepsBox.style.display = 'none';
+          testForm.classList.add('active');
+        } else if (data.qrDataUrl) {
+          statusDot.className = 'dot';
+          statusText.textContent = 'Ready! Scan the QR Code below:';
+          qrPlaceholder.style.display = 'none';
+          qrImg.src = data.qrDataUrl;
+          qrImg.style.display = 'block';
+          qrContainer.style.display = 'inline-flex';
+          stepsBox.style.display = 'block';
+          testForm.classList.remove('active');
+        } else {
+          statusDot.className = 'dot';
+          statusText.textContent = 'Generating QR code...';
+          qrPlaceholder.style.display = 'block';
+          qrImg.style.display = 'none';
+        }
+      } catch (err) {
+        document.getElementById('statusText').textContent = 'WhatsApp bridge offline. Run START-WHATSAPP.bat';
+      }
+    }
+
+    async function sendTestMessage() {
+      const to = document.getElementById('testNumber').value.trim();
+      const message = document.getElementById('testMsg').value.trim();
+      const btn = document.getElementById('sendBtn');
+      const resDiv = document.getElementById('sendResult');
+
+      if (!to || !message) {
+        alert('Please enter number and message.');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      resDiv.textContent = '';
+
+      try {
+        const res = await fetch('/api/v1/services/whatsapp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ to, message })
+        });
+        const data = await res.json();
+        if (data.success) {
+          resDiv.style.color = '#25d366';
+          resDiv.textContent = '✅ Message sent successfully to ' + to + '!';
+        } else {
+          resDiv.style.color = '#ff6b6b';
+          resDiv.textContent = '❌ Error: ' + (data.error || 'Failed to send');
+        }
+      } catch (e) {
+        resDiv.style.color = '#ff6b6b';
+        resDiv.textContent = '❌ Request failed: ' + e.message;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Send WhatsApp Message 🚀';
+      }
+    }
+
+    // Poll status every 2.5 seconds
+    setInterval(checkStatus, 2500);
+    checkStatus();
+  </script>
+</body>
+</html>

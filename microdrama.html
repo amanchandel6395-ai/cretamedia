@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#070908">
+  <title>AI Micro Dramas & Film Production | CRETA</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070908;
+      --surface: #0e1210;
+      --surface-card: #141816;
+      --border: #222a26;
+      --border-glow: rgba(229, 179, 118, 0.35);
+      --gold: #e5b376;
+      --gold-light: #f3d4a8;
+      --gold-gradient: linear-gradient(135deg, #ffffff 20%, #e5b376 100%);
+      --red-live: #ff334b;
+      --green-live: #25d366;
+      --text: #f7f2ea;
+      --text-muted: #9c9588;
+      --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'Space Grotesk', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; background: var(--bg); color: var(--text); font-family: var(--font-display); }
+    body { background: var(--bg); overflow-x: hidden; line-height: 1.6; }
+
+    /* Topbar */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 5vw;
+      background: rgba(7, 9, 8, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .brand-logo {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
+    .brand-logo span { color: var(--gold); }
+    .brand-badge {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      background: rgba(37, 211, 102, 0.12);
+      border: 1px solid rgba(37, 211, 102, 0.3);
+      color: var(--green-live);
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .live-pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--red-live);
+      box-shadow: 0 0 10px var(--red-live);
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.5; }
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--gold-light);
+    }
+    .btn-wa-nav {
+      background: #25d366 !important;
+      color: #04200f !important;
+      font-weight: 700 !important;
+      padding: 8px 16px;
+      border-radius: 999px;
+      transition: transform 0.2s, box-shadow 0.2s !important;
+    }
+    .btn-wa-nav:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
+    }
+
+    /* Hero */
+    .hero-wrapper {
+      position: relative;
+      padding-top: 130px;
+      padding-bottom: 80px;
+      overflow: hidden;
+    }
+    .ambient-glow {
+      position: absolute;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(229, 179, 118, 0.18) 0%, rgba(255, 51, 75, 0.08) 45%, transparent 75%);
+      filter: blur(85px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-container {
+      position: relative;
+      z-index: 1;
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 5vw;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(229, 179, 118, 0.1);
+      border: 1px solid rgba(229, 179, 118, 0.28);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 22px;
+    }
+    .hero-title {
+      font-size: clamp(38px, 5.5vw, 68px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 20px;
+      max-width: 950px;
+    }
+    .hero-title span {
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-subtitle {
+      font-size: clamp(16px, 1.8vw, 20px);
+      color: var(--text-muted);
+      max-width: 800px;
+      line-height: 1.6;
+      margin-bottom: 34px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 50px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold);
+      color: #070908;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 14px 28px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 20px rgba(229, 179, 118, 0.3);
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      background: #f0c38d;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 26px rgba(229, 179, 118, 0.45);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 14px;
+      padding: 14px 26px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .btn-secondary:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-2px);
+    }
+
+    /* Player & Scene Demo */
+    .studio-phone-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 40px;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 44px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 70px;
+    }
+    .phone-stage-left h3 {
+      font-size: clamp(26px, 3.2vw, 38px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+    .phone-stage-left h3 span { color: var(--gold); }
+    .phone-stage-left p {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    /* Scene Tabs */
+    .ep-tabs {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .ep-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-radius: 14px;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+    .ep-tab:hover {
+      border-color: rgba(229, 179, 118, 0.4);
+      background: rgba(229, 179, 118, 0.05);
+    }
+    .ep-tab.active {
+      border-color: var(--gold);
+      background: rgba(229, 179, 118, 0.12);
+    }
+    .ep-tab-info strong {
+      display: block;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .ep-tab-info span {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .ep-tab-badge {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gold);
+      font-family: var(--font-mono);
+      background: rgba(0, 0, 0, 0.3);
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(229, 179, 118, 0.2);
+    }
+
+    /* 9:16 Vertical Phone Simulator */
+    .phone-simulator-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .phone-simulator {
+      position: relative;
+      width: 270px;
+      height: 480px;
+      border-radius: 38px;
+      background: #000;
+      border: 5px solid #2a332e;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(229, 179, 118, 0.2);
+      overflow: hidden;
+    }
+    .phone-notch {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 18px;
+      background: #000;
+      border-radius: 999px;
+      z-index: 10;
+    }
+    .phone-simulator video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.3s ease;
+    }
+    .phone-ui-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 34px 16px 18px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, transparent 25%, transparent 65%, rgba(0,0,0,0.85) 100%);
+      pointer-events: none;
+      z-index: 5;
+    }
+    .phone-badge-live {
+      background: rgba(255, 51, 75, 0.85);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      padding: 3px 8px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .phone-sound-btn {
+      pointer-events: auto;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .phone-ep-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+    .phone-ep-desc {
+      font-size: 10px;
+      color: #ddd;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    /* Production Pipeline (Exact from Framer) */
+    .section-title {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .section-title h2 {
+      font-size: clamp(30px, 4vw, 48px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 12px;
+    }
+    .section-title h2 span { color: var(--gold); }
+    .section-title p {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-bottom: 70px;
+    }
+    .pipeline-step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 30px 26px;
+      transition: all 0.3s ease;
+    }
+    .pipeline-step:hover {
+      transform: translateY(-4px);
+      border-color: rgba(229, 179, 118, 0.45);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+    }
+    .step-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.16em;
+      margin-bottom: 14px;
+      display: inline-block;
+    }
+    .step-head {
+      font-size: 19px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .step-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* Tools Row from Framer */
+    .tools-wrap {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 80px;
+    }
+    .tool-chip {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gold-light);
+    }
+
+    /* Footer */
+    .footer {
+      background: #050706;
+      border-top: 1px solid var(--border);
+      padding: 70px 5vw 40px;
+    }
+    .footer-inner {
+      max-width: 1360px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+    .footer-brand h3 {
+      font-size: 24px;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+    .footer-brand p {
+      color: var(--text-muted);
+      font-size: 14px;
+      max-width: 460px;
+    }
+    .footer-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .studio-phone-grid { grid-template-columns: 1fr; padding: 26px; }
+      .pipeline-grid { grid-template-columns: 1fr; }
+      .nav-links a:not(.btn-wa-nav) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="topbar">
+    <a href="/" class="brand">
+      <div class="brand-logo">C<b>R</b>ETA<span>.</span></div>
+      <div class="brand-badge"><span class="live-pulse-dot" style="background:#25d366; width:6px; height:6px;"></span> STUDIO ACTIVE</div>
+    </a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/microdrama" class="active">Microdrama</a>
+      <a href="/services">Services</a>
+      <a href="/voiceover">Localisation</a>
+      <a href="/about">About</a>
+      <a href="https://wa.link/mcjxfk" target="_blank" class="btn-wa-nav">📱 WhatsApp Connect</a>
+    </nav>
+  </header>
+
+  <main class="hero-wrapper">
+    <div class="ambient-glow"></div>
+    <div class="hero-container">
+
+      <!-- Hero Header -->
+      <div class="hero-badge">
+        <div class="live-pulse-dot"></div>
+        AI PRODUCTION &amp; TOOLS
+      </div>
+
+      <h1 class="hero-title">
+        AI-Powered.<br>
+        <span>Human-Directed.</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        A production pipeline for cinematic AI micro dramas, ad films and branded content—not just a collection of generated clips.
+        From concept and screenplay to consistent characters, generated shots, sound and final delivery.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#simulator" class="btn-primary">Watch Studio Previews ↓</a>
+        <a href="#pipeline" class="btn-secondary">Production Process</a>
+        <a href="https://wa.link/mcjxfk" target="_blank" class="btn-secondary" style="border-color: rgba(37,211,102,0.4); color:#25d366">Chat on WhatsApp 💬</a>
+      </div>
+
+      <!-- Player & Scene Demo -->
+      <section id="simulator" class="studio-phone-grid">
+        <div class="phone-stage-left">
+          <div style="font-size:12px; font-weight:700; letter-spacing:0.14em; color:var(--text-muted); margin-bottom:12px; text-transform:uppercase;">
+            ACTIVE DEMO PREVIEW
+          </div>
+          <div class="ep-tabs">
+            <div class="ep-tab active" onclick="switchEpisode(0, this)">
+              <div class="ep-tab-info">
+                <strong>Microdrama Preview 01</strong>
+                <span>9:16 Vertical Cut • Generated Shots &amp; Audio</span>
+              </div>
+              <div class="ep-tab-badge">PREVIEW 01</div>
+            </div>
+
+            <div class="ep-tab" onclick="switchEpisode(1, this)">
+              <div class="ep-tab-info">
+                <strong>Microdrama Preview 02</strong>
+                <span>Dramatic Sequence • Scene Pacing &amp; Emotion</span>
+              </div>
+              <div class="ep-tab-badge">PREVIEW 02</div>
+            </div>
+          </div>
+
+          <h3>Human Creativity.<br><span>Thoughtful Technology.</span></h3>
+          <p>
+            We develop hooks, screenplay, shot lists and an approved treatment. Using Higgsfield, Google Flow, Kling and Runway as the brief requires, we generate and iterate shots, direct motion and ensure character and scene consistency throughout.
+          </p>
+
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <a href="https://drive.google.com/drive/folders/1RajqmMkmeoIZvNyE-Ar8KBrQRPGqwH8C" target="_blank" class="btn-primary" style="padding:11px 22px; font-size:13px;">
+              Explore Work on Google Drive ↗
+            </a>
+            <a href="https://wa.link/mcjxfk" target="_blank" class="btn-secondary" style="padding:11px 22px; font-size:13px;">
+              Discuss Your Brief on WhatsApp 💬
+            </a>
+          </div>
+        </div>
+
+        <!-- 9:16 Vertical Phone Simulator -->
+        <div class="phone-simulator-wrapper">
+          <div class="phone-simulator">
+            <div class="phone-notch"></div>
+            <video id="phoneVideo" src="/assets/videos/microdrama-01.mp4" autoplay loop muted playsinline></video>
+            
+            <div class="phone-ui-overlay">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div class="phone-badge-live">
+                  <span class="live-pulse-dot" style="width:5px; height:5px; background:#fff;"></span>
+                  STUDIO PREVIEW
+                </div>
+                <button class="phone-sound-btn" onclick="togglePhoneAudio(this)">
+                  <span>🔊</span> <span id="soundText">UNMUTE</span>
+                </button>
+              </div>
+
+              <div>
+                <div class="phone-ep-title" id="overlayTitle">Microdrama Preview 01</div>
+                <div class="phone-ep-desc" id="overlayDesc">Vertical 9:16 cut • Character consistency &amp; pacing.</div>
+                <div style="font-size:9px; color:#aaa; font-family:var(--font-mono);">CRETA STUDIO • 9:16 FORMAT</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- The Real Production Pipeline (from Framer site.js) -->
+      <section id="pipeline">
+        <div class="section-title">
+          <h2>Production <span>Pipeline</span></h2>
+          <p>A coordinated six-stage process from initial screenplay to final master delivery.</p>
+        </div>
+
+        <div class="pipeline-grid">
+          <div class="pipeline-step">
+            <span class="step-badge">STEP 01</span>
+            <div class="step-head">Brief &amp; screenplay</div>
+            <div class="step-desc">
+              Define the audience, offer, format and story. We develop hooks, screenplay, shot list and an approved treatment for a micro drama, ad film or campaign.
+            </div>
+          </div>
+
+          <div class="pipeline-step">
+            <span class="step-badge">STEP 02</span>
+            <div class="step-head">Visual development</div>
+            <div class="step-desc">
+              Create character references, style frames and storyboards. Establish a visual bible to guide identity, wardrobe, locations and continuity.
+            </div>
+          </div>
+
+          <div class="pipeline-step">
+            <span class="step-badge">STEP 03</span>
+            <div class="step-head">AI shot production</div>
+            <div class="step-desc">
+              Use Higgsfield, Google Flow, Kling and Runway as the brief requires. Generate and iterate shots, direct motion and check character and scene consistency.
+            </div>
+          </div>
+
+          <div class="pipeline-step">
+            <span class="step-badge">STEP 04</span>
+            <div class="step-head">Voice &amp; sound</div>
+            <div class="step-desc">
+              Cast human talent or use approved AI voices through tools such as ElevenLabs. Add dialogue, music and sound design, with consent for any cloned voice.
+            </div>
+          </div>
+
+          <div class="pipeline-step">
+            <span class="step-badge">STEP 05</span>
+            <div class="step-head">Edit &amp; finishing</div>
+            <div class="step-desc">
+              Editors shape pacing and story, composite and retouch shots, grade colour, add graphics and subtitles, and create campaign cutdowns.
+            </div>
+          </div>
+
+          <div class="pipeline-step">
+            <span class="step-badge">STEP 06</span>
+            <div class="step-head">Review &amp; launch</div>
+            <div class="step-desc">
+              Review cuts against milestones, make adjustments, prepare platform exports, and deliver masters with organised stems and project assets.
+            </div>
+          </div>
+        </div>
+
+        <!-- Tools Row from Framer -->
+        <div class="tools-wrap">
+          <span class="tool-chip">Higgsfield</span>
+          <span class="tool-chip">Google Flow</span>
+          <span class="tool-chip">Kling</span>
+          <span class="tool-chip">Runway</span>
+          <span class="tool-chip">ElevenLabs</span>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Studio Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <h3>C<b>R</b>ETA<span>.</span></h3>
+        <p>Kolkata, India.<br>Creative production, localisation in 70+ languages, and practical business technology.</p>
+      </div>
+      <div class="footer-actions">
+        <a href="https://drive.google.com/drive/folders/1RajqmMkmeoIZvNyE-Ar8KBrQRPGqwH8C" target="_blank" class="btn-secondary">Explore Work Drive ↗</a>
+        <a href="mailto:cretamediaofficial@gmail.com" class="btn-primary">✉️ cretamediaofficial@gmail.com</a>
+        <a href="https://wa.link/mcjxfk" target="_blank" class="btn-wa-nav">📱 +91 90687 34941</a>
+      </div>
+    </div>
+    <div style="max-width: 1360px; margin: 0 auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; font-size: 12px; color: #777;">
+      <span>© 2026 CRETA Studio · Kolkata, India</span>
+      <span>Human Creativity. Thoughtful Technology.</span>
+    </div>
+  </footer>
+
+  <script>
+    const EPISODES = [
+      {
+        video: '/assets/videos/microdrama-01.mp4',
+        title: "Microdrama Preview 01",
+        desc: "Vertical 9:16 cut • Character consistency & pacing."
+      },
+      {
+        video: '/assets/videos/microdrama-scene-02.mp4',
+        title: "Microdrama Preview 02",
+        desc: "Dramatic Sequence • Generated shots, dialogue & sound."
+      }
+    ];
+
+    function switchEpisode(index, element) {
+      document.querySelectorAll('.ep-tab').forEach(tab => tab.classList.remove('active'));
+      element.classList.add('active');
+
+      const videoEl = document.getElementById('phoneVideo');
+      const titleEl = document.getElementById('overlayTitle');
+      const descEl = document.getElementById('overlayDesc');
+
+      videoEl.style.opacity = '0';
+      setTimeout(() => {
+        videoEl.src = EPISODES[index].video;
+        videoEl.play();
+        videoEl.style.opacity = '1';
+        titleEl.textContent = EPISODES[index].title;
+        descEl.textContent = EPISODES[index].desc;
+      }, 200);
+    }
+
+    function togglePhoneAudio(button) {
+      const videoEl = document.getElementById('phoneVideo');
+      const soundText = document.getElementById('soundText');
+      if (videoEl.muted) {
+        videoEl.muted = false;
+        soundText.textContent = "MUTE";
+        button.querySelector('span').textContent = "🔊";
+      } else {
+        videoEl.muted = true;
+        soundText.textContent = "UNMUTE";
+        button.querySelector('span').textContent = "🔈";
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build Output
+dist/
+dist-ssr/
+*.local
+
+# Environment & Credentials
+.env
+.env.*
+!.env.example
+*.pem
+
+# Editor & System
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Test Screenshots & Scratch Bundles in Root
+/*.png
+/*.jpg
+/*.zip
+/test_*.cjs
+/verify_*.png
+
+# Other Projects & Embedded Repos
+rakazo/
+rakazo-connector-config.json
+
+# Vercel
+.vercel
+

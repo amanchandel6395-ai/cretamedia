@@ -1,0 +1,1191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#070908">
+  <title>CRETA | AI Production, Microdrama & Localisation in 70+ Languages</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070908;
+      --surface: #0e1210;
+      --surface-card: #141816;
+      --border: #222a26;
+      --border-glow: rgba(229, 179, 118, 0.35);
+      --gold: #e5b376;
+      --gold-light: #f3d4a8;
+      --gold-gradient: linear-gradient(135deg, #ffffff 20%, #e5b376 100%);
+      --red-live: #ff334b;
+      --green-live: #25d366;
+      --text: #f7f2ea;
+      --text-muted: #9c9588;
+      --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'Space Grotesk', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; background: var(--bg); color: var(--text); font-family: var(--font-display); }
+    body { background: var(--bg); overflow-x: hidden; line-height: 1.6; }
+
+    /* Topbar */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 5vw;
+      background: rgba(7, 9, 8, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .brand-logo {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
+    .brand-logo span { color: var(--gold); }
+    .brand-badge {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      background: rgba(37, 211, 102, 0.12);
+      border: 1px solid rgba(37, 211, 102, 0.3);
+      color: var(--green-live);
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .live-pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--red-live);
+      box-shadow: 0 0 10px var(--red-live);
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.5; }
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--gold-light);
+    }
+    .btn-wa-nav {
+      background: #25d366 !important;
+      color: #04200f !important;
+      font-weight: 700 !important;
+      padding: 8px 16px;
+      border-radius: 999px;
+      transition: transform 0.2s, box-shadow 0.2s !important;
+    }
+    .btn-wa-nav:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
+    }
+
+    /* Hero */
+    .hero-wrapper {
+      position: relative;
+      padding-top: 130px;
+      overflow: hidden;
+    }
+    .ambient-glow {
+      position: absolute;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(229, 179, 118, 0.18) 0%, rgba(255, 51, 75, 0.08) 45%, transparent 75%);
+      filter: blur(85px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-container {
+      position: relative;
+      z-index: 1;
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 5vw;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(229, 179, 118, 0.1);
+      border: 1px solid rgba(229, 179, 118, 0.28);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 22px;
+    }
+    .hero-title {
+      font-size: clamp(38px, 5.8vw, 72px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 22px;
+      max-width: 980px;
+    }
+    .hero-title span {
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-subtitle {
+      font-size: clamp(16px, 1.8vw, 20px);
+      color: var(--text-muted);
+      max-width: 820px;
+      line-height: 1.6;
+      margin-bottom: 36px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 50px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold);
+      color: #070908;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 14px 28px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 20px rgba(229, 179, 118, 0.3);
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      background: #f0c38d;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 26px rgba(229, 179, 118, 0.45);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 14px;
+      padding: 14px 26px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .btn-secondary:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-2px);
+    }
+
+    /* MICRODRAMA HERO SPOTLIGHT */
+    .microdrama-banner {
+      background: linear-gradient(135deg, rgba(20, 24, 22, 0.95) 0%, rgba(12, 15, 13, 0.98) 100%);
+      border: 1px solid rgba(229, 179, 118, 0.3);
+      border-radius: 28px;
+      padding: 44px;
+      margin-bottom: 70px;
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 40px;
+      align-items: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+    }
+    .mb-left h3 {
+      font-size: clamp(26px, 3.2vw, 38px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+    .mb-left h3 span { color: var(--gold); }
+    .mb-left p {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.65;
+      margin-bottom: 24px;
+      max-width: 680px;
+    }
+    .mb-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .mb-pill {
+      font-size: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 6px 14px;
+      border-radius: 999px;
+      color: #eee;
+    }
+    .mb-pill strong { color: var(--gold); }
+
+    /* Phone Mockup */
+    .phone-mockup-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .phone-frame {
+      width: 240px;
+      height: 420px;
+      border-radius: 36px;
+      border: 5px solid #2a332e;
+      background: #000;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(229, 179, 118, 0.2);
+    }
+    .phone-frame video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .phone-tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(255, 51, 75, 0.85);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      padding: 3px 8px;
+      border-radius: 999px;
+    }
+    .phone-bottom-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 12px 14px;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.85) 100%);
+      font-size: 10px;
+      color: #ccc;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* AUTOMATIC LIVE STAGES SHOWCASE */
+    .studio-stage-viewer {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7);
+      margin-bottom: 80px;
+    }
+    .stage-nav {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      background: #0b0e0c;
+      overflow-x: auto;
+    }
+    .stage-tab {
+      flex: 1;
+      min-width: 180px;
+      padding: 18px 20px;
+      background: transparent;
+      border: none;
+      border-right: 1px solid var(--border);
+      color: #8c8578;
+      text-align: left;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.2s, color 0.2s;
+    }
+    .stage-tab:last-child { border-right: none; }
+    .stage-tab:hover { background: rgba(255, 255, 255, 0.03); color: var(--text); }
+    .stage-tab.active {
+      background: #141a17;
+      color: var(--text);
+    }
+    .stage-tab-index {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+    .stage-tab-title {
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .stage-progress {
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: var(--gold);
+      box-shadow: 0 0 12px var(--gold);
+      transition: width 0.1s linear;
+    }
+
+    .stage-screen {
+      position: relative;
+      min-height: 540px;
+      display: flex;
+      align-items: flex-end;
+      background: #000;
+      overflow: hidden;
+    }
+    .stage-media-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1.03);
+      transition: opacity 0.8s ease, transform 1.2s ease;
+      filter: brightness(0.85);
+    }
+    .stage-media-bg.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .stage-screen::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(7, 9, 8, 0.2) 0%, rgba(7, 9, 8, 0.68) 50%, rgba(7, 9, 8, 0.98) 100%);
+      pointer-events: none;
+    }
+    .stage-overlay {
+      position: relative;
+      z-index: 2;
+      padding: 44px;
+      max-width: 900px;
+    }
+    .stage-top-hud {
+      position: absolute;
+      top: 24px;
+      left: 44px;
+      right: 44px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 3;
+    }
+    .stage-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255, 51, 75, 0.88);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      padding: 5px 14px;
+      border-radius: 999px;
+      box-shadow: 0 0 20px rgba(255, 51, 75, 0.4);
+    }
+    .btn-stage-audio {
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(229, 179, 118, 0.4);
+      color: var(--gold-light);
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-stage-audio:hover {
+      background: var(--gold);
+      color: #000;
+    }
+    .stage-title {
+      font-size: clamp(28px, 3.8vw, 44px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      margin-bottom: 12px;
+      color: #ffffff;
+    }
+    .stage-desc {
+      font-size: clamp(14px, 1.4vw, 16px);
+      color: #ded7cb;
+      line-height: 1.6;
+      margin-bottom: 22px;
+      max-width: 740px;
+    }
+    .stage-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 26px;
+    }
+    .stage-pill {
+      background: rgba(20, 26, 23, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      padding: 7px 15px;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #f1ebd8;
+    }
+    .stage-pill strong { color: var(--gold); }
+    .stage-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* Stats Bar (from Framer site) */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 44px;
+      margin-bottom: 90px;
+    }
+    .stat-number {
+      font-size: clamp(38px, 4.5vw, 56px);
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      line-height: 1;
+      color: var(--gold);
+      margin-bottom: 6px;
+      font-family: var(--font-mono);
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* CLIENT COLLABORATIONS MARQUEE (AUTHENTIC DATA) */
+    .clients-section {
+      background: #0b0e0c;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 80px 0;
+      margin-bottom: 90px;
+      overflow: hidden;
+    }
+    .clients-header {
+      text-align: center;
+      max-width: 820px;
+      margin: 0 auto 40px;
+      padding: 0 5vw;
+    }
+    .clients-header .tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .clients-header h2 {
+      font-size: clamp(28px, 3.6vw, 44px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 12px;
+    }
+    .clients-header p {
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: scrollClientMarquee 32s linear infinite;
+    }
+    @keyframes scrollClientMarquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .client-chip {
+      background: #141a17;
+      border: 1px solid #26312b;
+      border-radius: 14px;
+      padding: 18px 30px;
+      margin: 0 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #fff;
+      white-space: nowrap;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .client-chip:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+    }
+    .client-chip small {
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      color: var(--gold);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    /* Multi-Page Department Portals */
+    .multipage-banner {
+      max-width: 1360px;
+      margin: 0 auto 90px;
+      padding: 0 5vw;
+    }
+    .pages-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+    .page-nav-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 180px;
+      transition: transform 0.25s, border-color 0.25s, background 0.25s;
+    }
+    .page-nav-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--gold);
+      background: #18201c;
+    }
+    .pnc-top {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: var(--gold);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .pnc-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin: 8px 0;
+    }
+    .pnc-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .pnc-arrow {
+      font-size: 20px;
+      color: var(--gold);
+      margin-top: 16px;
+      transition: transform 0.2s;
+    }
+    .page-nav-card:hover .pnc-arrow {
+      transform: translateX(4px);
+    }
+
+    /* Verified Client Feedback (Exact quotes from Framer) */
+    .testimonials-section {
+      max-width: 1360px;
+      margin: 0 auto 90px;
+      padding: 0 5vw;
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+    .testimonial-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 34px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .stars {
+      color: var(--gold);
+      font-size: 14px;
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+    }
+    .testimonial-quote {
+      font-size: 14.5px;
+      line-height: 1.7;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .author-info strong {
+      display: block;
+      font-size: 14px;
+      color: #fff;
+    }
+    .author-info span {
+      font-size: 12px;
+      color: var(--gold);
+    }
+
+    /* Footer */
+    .footer {
+      background: #050706;
+      border-top: 1px solid var(--border);
+      padding: 70px 5vw 40px;
+    }
+    .footer-inner {
+      max-width: 1360px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+    .footer-brand h3 {
+      font-size: 24px;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+    .footer-brand p {
+      color: var(--text-muted);
+      font-size: 14px;
+      max-width: 460px;
+    }
+    .footer-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* Mobile */
+    @media (max-width: 900px) {
+      .microdrama-banner { grid-template-columns: 1fr; padding: 26px; }
+      .pages-grid { grid-template-columns: 1fr 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .stats-bar { grid-template-columns: 1fr 1fr; padding: 24px; }
+      .stage-screen { min-height: 480px; }
+      .stage-overlay { padding: 24px; }
+      .stage-top-hud { left: 24px; right: 24px; }
+      .nav-links a:not(.btn-wa-nav) { display: none; }
+    }
+    @media (max-width: 580px) {
+      .pages-grid { grid-template-columns: 1fr; }
+      .stats-bar { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="topbar">
+    <a href="/" class="brand">
+      <div class="brand-logo">C<b>R</b>ETA<span>.</span></div>
+      <div class="brand-badge"><span class="live-pulse-dot" style="background:#25d366; width:6px; height:6px;"></span> STUDIO ACTIVE</div>
+    </a>
+    <nav class="nav-links">
+      <a href="/" class="active">Home</a>
+      <a href="/microdrama">Microdrama</a>
+      <a href="/services">Services</a>
+      <a href="/voiceover">Localisation</a>
+      <a href="/about">About</a>
+      <a href="https://wa.link/mcjxfk" target="_blank" class="btn-wa-nav">📱 WhatsApp Connect</a>
+    </nav>
+  </header>
+
+  <!-- Ambient Glow & Main Hero -->
+  <main class="hero-wrapper">
+    <div class="ambient-glow"></div>
+    <div class="hero-container">
+
+      <div class="hero-badge">
+        <div class="live-pulse-dot"></div>
+        CREATIVE PRODUCTION + TECHNOLOGY STUDIO
+      </div>
+
+      <h1 class="hero-title">
+        Creta Your<br>
+        <span>AI-Powered</span> Creative Studio.
+      </h1>
+
+      <p class="hero-subtitle">
+        AI production, dubbing and localisation in 70+ languages, plus digital tools that solve real business problems. Built for OTT platforms, brands, creators and influencers.
+      </p>
+
+      <div class="hero-actions">
+        <a href="/microdrama" class="btn-primary">Explore Microdramas 🎬</a>
+        <a href="#stages" class="btn-secondary">View Studio Showcase ↓</a>
+        <a href="https://wa.link/mcjxfk" target="_blank" class="btn-secondary" style="border-color: rgba(37,211,102,0.4); color:#25d366">Chat on WhatsApp 💬</a>
+      </div>
+
+      <!-- MICRODRAMA SPOTLIGHT BANNER -->
+      <section class="microdrama-banner">
+        <div class="mb-left">
+          <div style="font-size:11px; letter-spacing:0.2em; color:var(--gold); font-weight:700; margin-bottom:10px;">
+            AI PRODUCTION &amp; MICRO DRAMAS
+          </div>
+          <h3>AI Micro Dramas &amp;<br><span>Cinematic Branded Stories</span></h3>
+          <p>
+            AI micro dramas, cinematic ad films, product films and branded stories—from concept and screenplay to consistent characters, generated shots, sound and final delivery. Combining human creative direction with the right AI workflow.
+          </p>
+          <div class="mb-pills">
+            <span class="mb-pill"><strong>Format:</strong> 9:16 Vertical &amp; 16:9</span>
+            <span class="mb-pill"><strong>Workflow:</strong> Human-Led Creative Direction</span>
+            <span class="mb-pill"><strong>Localisation:</strong> 70+ Languages</span>
+            <span class="mb-pill"><strong>Quality:</strong> Frame-by-Frame QC</span>
+          </div>
+          <a href="/microdrama" class="btn-primary" style="padding:11px 24px; font-size:13px;">
+            See Microdrama Pipeline &rarr;
+          </a>
+        </div>
+
+        <div class="phone-mockup-wrapper">
+          <div class="phone-frame">
+            <video src="/assets/videos/microdrama-01.mp4" autoplay loop muted playsinline></video>
+            <div class="phone-tag">🔴 LIVE PREVIEW</div>
+            <div class="phone-bottom-bar">
+              <span>9:16 Vertical Format</span>
+              <span style="color:var(--gold); font-weight:700">CRETA STUDIO</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AUTOMATIC LIVE STAGES SHOWCASE -->
+      <div class="studio-stage-viewer" id="stages">
+        <div class="stage-nav">
+          <button class="stage-tab active" data-index="0" onclick="manualSwitchStage(0)">
+            <span class="stage-tab-index">DEPARTMENT 01</span>
+            <span class="stage-tab-title">🎙️ Localisation (70+ Langs)</span>
+            <div class="stage-progress" id="progress0"></div>
+          </button>
+          <button class="stage-tab" data-index="1" onclick="manualSwitchStage(1)">
+            <span class="stage-tab-index">DEPARTMENT 02</span>
+            <span class="stage-tab-title">🎬 AI Microdrama Production</span>
+            <div class="stage-progress" id="progress1"></div>
+          </button>
+          <button class="stage-tab" data-index="2" onclick="manualSwitchStage(2)">
+            <span class="stage-tab-index">DEPARTMENT 03</span>
+            <span class="stage-tab-title">🖥️ AI-Powered Video Editing</span>
+            <div class="stage-progress" id="progress2"></div>
+          </button>
+          <button class="stage-tab" data-index="3" onclick="manualSwitchStage(3)">
+            <span class="stage-tab-index">DEPARTMENT 04</span>
+            <span class="stage-tab-title">🎚️ Voice-over &amp; Audiobooks</span>
+            <div class="stage-progress" id="progress3"></div>
+          </button>
+          <button class="stage-tab" data-index="4" onclick="manualSwitchStage(4)">
+            <span class="stage-tab-index">DEPARTMENT 05</span>
+            <span class="stage-tab-title">🤖 Websites, AI SaaS &amp; Tools</span>
+            <div class="stage-progress" id="progress4"></div>
+          </button>
+        </div>
+
+        <div class="stage-screen">
+          <video src="/assets/videos/dubbing-session.mp4" class="stage-media-bg active" id="bg0" autoplay loop muted playsinline poster="/assets/images/creta-voice-studio.png"></video>
+          <video src="/assets/videos/microdrama-01.mp4" class="stage-media-bg" id="bg1" autoplay loop muted playsinline poster="/assets/images/microdrama-check.png"></video>
+          <video src="/assets/videos/editing-session.mp4" class="stage-media-bg" id="bg2" autoplay loop muted playsinline poster="/assets/images/creta-edit-suite.png"></video>
+          <img src="/assets/images/creta-voice-studio.png" class="stage-media-bg" id="bg3" alt="Audio Production Suite">
+          <img src="/assets/images/creta-social-floor.png" class="stage-media-bg" id="bg4" alt="AI Technology Lab">
+
+          <div class="stage-top-hud">
+            <div class="stage-live-badge" id="stageBadge">🔴 LIVE IN SESSION • LOCALISATION</div>
+            <button class="btn-stage-audio" onclick="toggleActiveStageAudio(this)">
+              <span>🔊</span> <span id="stageAudioText">UNMUTE</span>
+            </button>
+          </div>
+
+          <div class="stage-overlay">
+            <h2 class="stage-title" id="stageTitle">Localisation · 70+ Languages</h2>
+            <p class="stage-desc" id="stageDesc">
+              Take your stories worldwide across Indian and international languages. Translation, cultural adaptation, lip-sync scripts, native voice casting, directed dubbing, dialogue editing, mixing, subtitles and linguistic QC—all managed in one coordinated workflow.
+            </p>
+            <div class="stage-pills" id="stagePills">
+              <span class="stage-pill"><strong>Scope:</strong> 70+ Languages Worldwide</span>
+              <span class="stage-pill"><strong>Dubbing:</strong> Native Voice Casting &amp; Direction</span>
+              <span class="stage-pill"><strong>Audio:</strong> Dialogue Edit, Sync &amp; Mix</span>
+              <span class="stage-pill"><strong>Delivery:</strong> Time-coded Subtitles &amp; QC Masters</span>
+            </div>
+            <div class="stage-actions">
+              <a href="/voiceover" id="stageActionLink" class="btn-primary" style="padding:12px 24px; font-size:13px">Explore Dubbing Pipeline &rarr;</a>
+              <a href="https://wa.link/mcjxfk" target="_blank" class="btn-secondary" style="padding:12px 22px; font-size:13px">Chat on WhatsApp 💬</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Performance Stats (Real from Framer) -->
+      <div class="stats-bar">
+        <div>
+          <div class="stat-number">6+</div>
+          <div class="stat-label">Years of Experience</div>
+        </div>
+        <div>
+          <div class="stat-number">400+</div>
+          <div class="stat-label">Projects Delivered</div>
+        </div>
+        <div>
+          <div class="stat-number">300+</div>
+          <div class="stat-label">Happy Clients</div>
+        </div>
+        <div>
+          <div class="stat-number">70+</div>
+          <div class="stat-label">Languages Worldwide</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CLIENT COLLABORATIONS MARQUEE (AUTHENTIC DATA FROM FRAMER) -->
+    <section class="clients-section" id="clients">
+      <div class="clients-header">
+        <span class="tag">CLIENT COLLABORATIONS</span>
+        <h2>Stories for platforms.<br><span style="color:var(--gold);">Impact for brands.</span></h2>
+        <p>Creative production, localisation and practical technology—coordinated around your audience and goals.</p>
+      </div>
+
+      <div class="marquee-track">
+        <!-- Set 1 -->
+        <div class="client-chip"><small>CLIENT TESTIMONIAL</small>BLUESKY VENTURES · DUBAI</div>
+        <div class="client-chip"><small>CLIENT TESTIMONIAL</small>PRAN FOOD LIMITED</div>
+        <div class="client-chip"><small>CLIENT TESTIMONIAL</small>GAGGI CANADA · BRIGHTSUN</div>
+        <div class="client-chip"><small>COLLABORATION CATEGORY</small>OTT &amp; STREAMING</div>
+        <div class="client-chip"><small>COLLABORATION CATEGORY</small>BRANDS &amp; AGENCIES</div>
+        <div class="client-chip"><small>COLLABORATION CATEGORY</small>CREATORS &amp; INFLUENCERS</div>
+        <div class="client-chip"><small>COLLABORATION CATEGORY</small>DIGITAL PLATFORMS</div>
+        <div class="client-chip"><small>COLLABORATION CATEGORY</small>GROWING BUSINESSES</div>
+
+        <!-- Set 2 (Seamless loop clone) -->
+        <div class="client-chip"><small>CLIENT TESTIMONIAL</small>BLUESKY VENTURES · DUBAI</div>
+        <div class="client-chip"><small>CLIENT TESTIMONIAL</small>PRAN FOOD LIMITED</div>
+        <div class="client-chip"><small>CLIENT TESTIMONIAL</small>GAGGI CANADA · BRIGHTSUN</div>
+        <div class="client-chip"><small>COLLABORATION CATEGORY</small>OTT &amp; STREAMING</div>
+        <div class="client-chip"><small>COLLABORATION CATEGORY</small>BRANDS &amp; AGENCIES</div>
+        <div class="client-chip"><small>COLLABORATION CATEGORY</small>CREATORS &amp; INFLUENCERS</div>
+        <div class="client-chip"><small>COLLABORATION CATEGORY</small>DIGITAL PLATFORMS</div>
+        <div class="client-chip"><small>COLLABORATION CATEGORY</small>GROWING BUSINESSES</div>
+      </div>
+    </section>
+
+    <!-- Multi-Page Department Portals -->
+    <div class="multipage-banner">
+      <div style="margin-bottom: 24px;">
+        <span class="hero-badge" style="margin-bottom:10px">EXPLORE DEPARTMENTS</span>
+        <h2 style="font-size: clamp(26px, 3.2vw, 38px); font-weight:800; letter-spacing:-0.03em">Dedicated Multi-Page Portals</h2>
+      </div>
+
+      <div class="pages-grid">
+        <a href="/microdrama" class="page-nav-card">
+          <div>
+            <div class="pnc-top">01 / PRODUCTION</div>
+            <div class="pnc-title">Microdrama Hub</div>
+            <div class="pnc-desc">AI micro dramas, screenplay, consistent characters, generated shots &amp; sound.</div>
+          </div>
+          <div class="pnc-arrow">&rarr;</div>
+        </a>
+
+        <a href="/voiceover" class="page-nav-card">
+          <div>
+            <div class="pnc-top">02 / LOCALISATION</div>
+            <div class="pnc-title">Localisation &amp; Voice</div>
+            <div class="pnc-desc">70+ languages worldwide, translation, native casting, dubbing &amp; audio mixing.</div>
+          </div>
+          <div class="pnc-arrow">&rarr;</div>
+        </a>
+
+        <a href="/services" class="page-nav-card">
+          <div>
+            <div class="pnc-top">03 / FULL ROSTER</div>
+            <div class="pnc-title">All 7 Services</div>
+            <div class="pnc-desc">Video editing, AI production, voice-over, social media, screenwriting &amp; SaaS.</div>
+          </div>
+          <div class="pnc-arrow">&rarr;</div>
+        </a>
+
+        <a href="/about" class="page-nav-card">
+          <div>
+            <div class="pnc-top">04 / THE STUDIO</div>
+            <div class="pnc-title">About CRETA</div>
+            <div class="pnc-desc">Creativity meets technology. 6+ years, 400+ projects, 300+ clients.</div>
+          </div>
+          <div class="pnc-arrow">&rarr;</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Verified Client Feedback (Exact quotes from Framer) -->
+    <section class="testimonials-section">
+      <div style="margin-bottom: 30px;">
+        <span class="hero-badge" style="margin-bottom:10px">CLIENT FEEDBACK</span>
+        <h2 style="font-size: clamp(28px, 3.5vw, 42px); font-weight:800; letter-spacing:-0.04em">Good work travels far.</h2>
+      </div>
+
+      <div class="testimonials-grid">
+        <article class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <blockquote class="testimonial-quote">
+            “The voice-over editing and graphic design work have always been top-notch, with barely any need for corrections. The creativity and professionalism have played a huge role in our growth.”
+          </blockquote>
+          <div class="author-info">
+            <strong>David Dubai</strong>
+            <span>Bluesky Ventures</span>
+          </div>
+        </article>
+
+        <article class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <blockquote class="testimonial-quote">
+            “The creativity and strategy truly elevate a brand to the next level. Everything is handled professionally, with minimal need for corrections.”
+          </blockquote>
+          <div class="author-info">
+            <strong>Pran Food Limited</strong>
+            <span>Corporate Client</span>
+          </div>
+        </article>
+
+        <article class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <blockquote class="testimonial-quote">
+            “The team is highly creative and strategic, delivering content that truly resonates with the audience. Everything is handled so professionally.”
+          </blockquote>
+          <div class="author-info">
+            <strong>Gaggi Canada</strong>
+            <span>Brightsun</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Studio Footer -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <h3>C<b>R</b>ETA<span>.</span></h3>
+          <p>Kolkata, India.<br>Creative production, localisation in 70+ languages, and practical business technology.</p>
+        </div>
+        <div class="footer-actions">
+          <a href="https://drive.google.com/drive/folders/1RajqmMkmeoIZvNyE-Ar8KBrQRPGqwH8C" target="_blank" class="btn-secondary">Explore Work Drive ↗</a>
+          <a href="mailto:cretamediaofficial@gmail.com" class="btn-primary">✉️ cretamediaofficial@gmail.com</a>
+          <a href="https://wa.link/mcjxfk" target="_blank" class="btn-wa-nav">📱 +91 90687 34941</a>
+        </div>
+      </div>
+      <div style="max-width: 1360px; margin: 0 auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; font-size: 12px; color: #777;">
+        <span>© 2026 CRETA Studio · Kolkata, India</span>
+        <span>Human Creativity. Thoughtful Technology.</span>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    const STAGES_DATA = [
+      {
+        badge: "🔴 LIVE IN SESSION • LOCALISATION",
+        title: "Localisation · 70+ Languages",
+        desc: "Take your stories worldwide across Indian and international languages. Translation, cultural adaptation, lip-sync scripts, native voice casting, directed dubbing, dialogue editing, mixing, subtitles and linguistic QC—all managed in one coordinated workflow.",
+        linkText: "Explore Dubbing Pipeline →",
+        linkUrl: "/voiceover",
+        pills: [
+          "<strong>Scope:</strong> 70+ Languages Worldwide",
+          "<strong>Dubbing:</strong> Native Voice Casting & Direction",
+          "<strong>Audio:</strong> Dialogue Edit, Sync & Mix",
+          "<strong>Delivery:</strong> Time-coded Subtitles & QC Masters"
+        ]
+      },
+      {
+        badge: "🔴 LIVE IN SESSION • AI PRODUCTION",
+        title: "AI Production & Microdrama",
+        desc: "AI micro dramas, cinematic ad films, product films and branded stories—from concept and screenplay to consistent characters, generated shots, sound and final delivery. Combining human creative direction with the right AI workflow.",
+        linkText: "Explore Microdrama Pipeline →",
+        linkUrl: "/microdrama",
+        pills: [
+          "<strong>Format:</strong> 9:16 Vertical & 16:9",
+          "<strong>Workflow:</strong> Higgsfield, Google Flow, Kling, Runway",
+          "<strong>Voices:</strong> Cast Talent & ElevenLabs",
+          "<strong>Direction:</strong> Screenplay, Character Bibles & Human QC"
+        ]
+      },
+      {
+        badge: "🔴 LIVE IN SESSION • VIDEO EDITING",
+        title: "AI-Powered Video Editing",
+        desc: "Human-led editing enhanced with AI: transcript-based cuts, dialogue cleanup, rotoscoping, object removal, generative inserts, motion graphics, colour grading and sound design. Turn long-form footage into platform-ready reels, trailers and multilingual versions.",
+        linkText: "Explore Video Services →",
+        linkUrl: "/services",
+        pills: [
+          "<strong>Lead:</strong> Human-Led Finishing",
+          "<strong>Enhancements:</strong> AI Dialogue Clean & Rotoscoping",
+          "<strong>Finishing:</strong> Colour Grading & Sound Design",
+          "<strong>Outputs:</strong> Multilingual Cutdowns & Trailers"
+        ]
+      },
+      {
+        badge: "🔴 LIVE IN SESSION • VOICE PRODUCTION",
+        title: "Voice-over & Audiobooks",
+        desc: "Expressive human performances for audiobooks, audio dramas, commercials, animation, explainers, podcasts and e-learning. We handle casting, direction, recording, editing and mastering, with AI voices or consent-based voice cloning available when the brief calls for them.",
+        linkText: "Explore Voice Services →",
+        linkUrl: "/voiceover",
+        pills: [
+          "<strong>Performances:</strong> Expressive Human Voices First",
+          "<strong>Formats:</strong> Audiobooks, Commercials, Audio Dramas",
+          "<strong>Direction:</strong> Casting, Performance Direction & Mastering",
+          "<strong>AI Options:</strong> Consent-based Voice Models When Required"
+        ]
+      },
+      {
+        badge: "🔴 LIVE IN SESSION • BUSINESS TECHNOLOGY",
+        title: "Websites, AI Assistants & SaaS",
+        desc: "We design websites and build business-focused AI assistants, SaaS tools and automations that solve real operational problems. From lead qualification, booking and customer support to internal knowledge assistants, CRM workflows and dashboards.",
+        linkText: "Explore Tech Services →",
+        linkUrl: "/services",
+        pills: [
+          "<strong>Approach:</strong> Understand the Work Before Choosing Tools",
+          "<strong>Solutions:</strong> Websites, AI Assistants, SaaS & Automation",
+          "<strong>Integrations:</strong> Connect with Existing Data & CRMs",
+          "<strong>Handover:</strong> Test, Train & Support Adoption"
+        ]
+      }
+    ];
+
+    let currentStage = 0;
+    const stageDuration = 6000;
+    let progressStartTime = 0;
+    let progressRaf = null;
+
+    function renderStage(index) {
+      currentStage = index;
+      const data = STAGES_DATA[index];
+
+      document.querySelectorAll('.stage-tab').forEach((tab, i) => {
+        tab.classList.toggle('active', i === index);
+      });
+
+      document.querySelectorAll('.stage-media-bg').forEach((bg, i) => {
+        const isActive = (i === index);
+        bg.classList.toggle('active', isActive);
+        if (bg.tagName === 'VIDEO' && isActive) {
+          bg.play().catch(() => {});
+        }
+      });
+
+      const badge = document.getElementById('stageBadge');
+      const title = document.getElementById('stageTitle');
+      const desc = document.getElementById('stageDesc');
+      const pillsContainer = document.getElementById('stagePills');
+      const actionLink = document.getElementById('stageActionLink');
+
+      if (badge) badge.innerHTML = data.badge;
+      if (title) title.textContent = data.title;
+      if (desc) desc.textContent = data.desc;
+      if (actionLink) {
+        actionLink.textContent = data.linkText;
+        actionLink.href = data.linkUrl;
+      }
+
+      if (pillsContainer) {
+        pillsContainer.innerHTML = data.pills.map(p => `<span class="stage-pill">${p}</span>`).join('');
+      }
+
+      document.querySelectorAll('.stage-progress').forEach(p => p.style.width = '0%');
+      progressStartTime = performance.now();
+      animateProgress(index);
+    }
+
+    function animateProgress(index) {
+      cancelAnimationFrame(progressRaf);
+      const progressBar = document.getElementById('progress' + index);
+
+      function step(now) {
+        const elapsed = now - progressStartTime;
+        const pct = Math.min(100, (elapsed / stageDuration) * 100);
+        if (progressBar) progressBar.style.width = pct + '%';
+
+        if (elapsed < stageDuration) {
+          progressRaf = requestAnimationFrame(step);
+        } else {
+          const nextIndex = (currentStage + 1) % STAGES_DATA.length;
+          renderStage(nextIndex);
+        }
+      }
+      progressRaf = requestAnimationFrame(step);
+    }
+
+    function manualSwitchStage(index) {
+      cancelAnimationFrame(progressRaf);
+      renderStage(index);
+    }
+
+    function toggleActiveStageAudio(btn) {
+      const activeVideo = document.querySelector('.stage-media-bg.active');
+      const textSpan = document.getElementById('stageAudioText');
+      if (activeVideo && activeVideo.tagName === 'VIDEO') {
+        if (activeVideo.muted) {
+          activeVideo.muted = false;
+          textSpan.textContent = "MUTE";
+          btn.querySelector('span').textContent = "🔊";
+        } else {
+          activeVideo.muted = true;
+          textSpan.textContent = "UNMUTE";
+          btn.querySelector('span').textContent = "🔈";
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderStage(0);
+    });
+  </script>
+</body>
+</html>

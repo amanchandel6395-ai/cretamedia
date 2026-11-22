@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json.schemastore.org/gemini-tools.json",
+  "description": "Google Gemini Function Calling Schema for CRETA MEDIA Virtual Studio & WhatsApp Integration",
+  "functionDeclarations": [
+    {
+      "name": "creta_get_departments",
+      "description": "Returns all 6 photorealistic departments in the CRETA MEDIA virtual production studio (Exterior, Reception, Dubbing, Editing, Film Set, Social Hub) along with active statuses.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {}
+      }
+    },
+    {
+      "name": "creta_navigate_department",
+      "description": "Navigates the 3D virtual studio tour to a specific department (0=Exterior, 1=Reception, 2=Dubbing, 3=Editing, 4=FilmSet, 5=SocialHub).",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "departmentIndex": {
+            "type": "INTEGER",
+            "description": "Department index from 0 to 5"
+          }
+        },
+        "required": ["departmentIndex"]
+      }
+    },
+    {
+      "name": "creta_send_whatsapp",
+      "description": "Sends a direct WhatsApp message to any phone number without needing any passwords. Uses the scanned WhatsApp session.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "to": {
+            "type": "STRING",
+            "description": "Recipient phone number with country code, e.g. '919068734941'"
+          },
+          "message": {
+            "type": "STRING",
+            "description": "The WhatsApp message content to send"
+          }
+        },
+        "required": ["to", "message"]
+      }
+    },
+    {
+      "name": "creta_request_dubbing",
+      "description": "Requests voice recording and dubbing in 70+ languages with Neumann U87 and SSL console specs.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "projectTitle": { "type": "STRING" },
+          "targetLanguages": {
+            "type": "ARRAY",
+            "items": { "type": "STRING" },
+            "description": "Target languages (e.g. ['Hindi', 'English', 'Spanish'])"
+          },
+          "voiceStyle": { "type": "STRING" }
+        },
+        "required": ["projectTitle", "targetLanguages"]
+      }
+    },
+    {
+      "name": "creta_request_video_editing",
+      "description": "Submits a 4K DaVinci Resolve grading and editing task in 16:9 or 9:16.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "projectName": { "type": "STRING" },
+          "aspectRatio": { "type": "STRING", "description": "16:9, 9:16, 1:1, or 2.39:1" }
+        },
+        "required": ["projectName", "aspectRatio"]
+      }
+    },
+    {
+      "name": "creta_request_microdrama",
+      "description": "Commissions an original vertical mobile microdrama series.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "genre": { "type": "STRING" },
+          "synopsis": { "type": "STRING" },
+          "episodesCount": { "type": "INTEGER" }
+        },
+        "required": ["genre", "synopsis"]
+      }
+    }
+  ]
+}
